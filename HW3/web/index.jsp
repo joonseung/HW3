@@ -10,12 +10,13 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title> Salary Calculator </title>
+        <link rel="stylesheet" type="text/css" href="stylesheet.css"/>
     </head>
     <body>
         <h1>Salary Calculator</h1>
         
         <form name="demoForm" action="results.jsp" method="post">
-            <table>
+            <table align="center">
                 <tbody>
                     <tr>
                         <td>Hours Worked:</td>
@@ -39,6 +40,7 @@
                 </tbody>
             </table>
             
+            <br><hr>
             <input type="reset" value="Clear" id="clear">
             <input type="submit" value="Submit !" id="submit">
             
