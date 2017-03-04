@@ -13,18 +13,35 @@
     </head>
     
     <%
-      String totalHoursWorked = request.getParameter("Hoursworked");
-      String hourlyRate = request.getParameter("payRate");
-      String hoursOvertime = request.getParameter("payRate");
-      String overtimeHourlyRate = request.getParameter("payRate");
-      String grossPay = request.getParameter("payRate");
-      String preTaxDeduct = request.getParameter("preTaxDeduct");
-      String preTaxPay = request.getParameter("payRate");
-      String taxAmount = request.getParameter("payRate");
-      String postTaxPay = request.getParameter("payRate");
-      String postTaxDeduct = request.getParameter("postTaxDeduct");
-      String netPay = request.getParameter("payRate");
-        %>
+      double totalHoursWorked = Double.parseDouble(request.getParameter("hoursWorked"));
+      double hourlyRate = Double.parseDouble(request.getParameter("payRate"));
+      double preTaxDeduct = Double.parseDouble(request.getParameter("preTaxDeduct"));
+      double postTaxDeduct = Double.parseDouble(request.getParameter("postTaxDeduct"));
+      
+      double otHours = totalHoursWorked -40;
+      double otPayRate = hourlyRate*1.5;
+      double grossPay;
+      double preTaxPay;
+      double taxAmount;
+      double postTaxPay;
+      double netTaxPay;
+      
+      /* 
+      if(totalHoursWorked>40)
+      {double regularHours = 40;
+          double otHours = totalHoursWorked -40;
+          double otPayRate = hourlyRate*1.5;
+          double otPay = otHours * otPayRate;
+          double regularPay = regularHours * hourlyRate;
+          double grossPay = regularPay + otPay;
+      }
+      else
+      {
+          double grossPay = totalHoursWorked * hourlyRate;
+      }
+     */
+      
+      %>
         
     <body>
         <h1>Salary Information</h1>
@@ -41,17 +58,46 @@
             
             <tr>
                 <td>#Hours Overtime:</td>
-                <td><%= hoursOvertime %></td>
+                <td>
+                    <%
+                        int[] Hours;
+                        if (totalHoursWorked > 40)
+                        { 
+                            out.print(otHours);
+                        }
+                        else 
+                            out.print("0");
+                    
+                        %>
+                </td>
             </tr>
             
             <tr>
                 <td>Overtime Hourly Rate:</td>
-                <td><%= overtimeHourlyRate %></td>
+                <td><%
+                        if (totalHoursWorked>40)
+                        {
+                            out.print(otPayRate);
+                        }
+                        else
+                            out.print("0");
+                        
+                        %></td>
             </tr>
             
             <tr>
                 <td>Gross Pay:</td>
-                <td><%= grossPay %></td>
+                <td><%
+                      
+                        if (totalHoursWorked>40)
+                        {
+                            grossPay = (40*hourlyRate)+(otHours*otPayRate);
+                            out.print(grossPay);
+                        }
+                        else
+                            grossPay = totalHoursWorked*hourlyRate;
+                            out.print(grossPay); //regular grosspay under 40 hr
+                        %></td>
             </tr>
             
             <tr>
@@ -61,17 +107,34 @@
             
             <tr>
                 <td>Pre-tax Pay:</td>
-                <td><%= preTaxPay %></td>
+                <td><% if (grossPay>0)
+                        {
+                            preTaxPay = grossPay-preTaxDeduct;
+                            out.print(preTaxPay);
+                        } %></td>
             </tr>
             
             <tr>
                 <td>Tax Amount:</td>
-                <td><%= taxAmount %></td>
+                <td><%
+                        if (grossPay < 500) {
+                        taxAmount=(grossPay-preTaxDeduct)*0.18;
+                            out.print(taxAmount);
+                       
+                        }
+                        else 
+                            taxAmount=(grossPay-preTaxDeduct)*0.22;
+                            out.print(taxAmount);
+                        %></td>
             </tr>
             
             <tr>
                 <td>Post-tax Pay:</td>
-                <td><%= postTaxPay %></td>
+                <td><% if (taxAmount>0)
+                        {
+                            postTaxPay = (grossPay-preTaxDeduct)-taxAmount;
+                            out.print(postTaxPay);
+                        } %></td>
             </tr>
             
             <tr>
@@ -81,7 +144,11 @@
             
             <tr>
                 <td>Net Pay: </td>
-                <td><%= netPay %></td>
+                <td><% if (postTaxDeduct>0)
+                        {
+                            netTaxPay = ((grossPay-preTaxDeduct)-taxAmount)-postTaxDeduct; // postTaxPay - postTaxDeduct
+                            out.print(netTaxPay);
+                        } %></td>
             </tr>
         </table>
     </body>
