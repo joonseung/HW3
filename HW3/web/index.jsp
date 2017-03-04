@@ -9,10 +9,10 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title> Simple Calculator </title>
+        <title> Salary Calculator </title>
     </head>
     <body>
-        <h1>Simple Calculator</h1>
+        <h1>Salary Calculator</h1>
         
         <form name="demoForm" action="results.jsp" method="post">
             <table>
