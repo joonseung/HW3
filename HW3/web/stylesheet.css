@@ -14,9 +14,27 @@ H1 {
    color: white;
 }
 
-div {font-family: arial,verdana,sans-serif;
-   font-size: 12pt;
-   text-align:center;
-   background: white;
-   color: black;
+table{
+    width: auto;
+    height: auto;
+    
+}
+
+.this {
+	background-color: white;
+        color: black;
+	font-size: 12pt;
+	font-family: arial,verdana,sans-serif;
+        border-collapse: collapse;
+        
+}
+
+.numbers {
+	background-color: white;
+	text-align: right;
+        color: black;
+	font-size: 12pt;
+	font-family: arial,verdana,sans-serif;
+        font-weight: normal;
+        
 }
